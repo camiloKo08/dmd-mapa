@@ -1,0 +1,211 @@
+/* =====================================================================
+   site.css — ESTILOS COMPARTIDOS DEL SITIO
+   Usados por index.html, lugar.html y mapa.html. Los estilos propios de
+   cada página (el mapa, la galería, el panel de administrador) viven en
+   el <style> de cada archivo — aquí solo lo que se repite en todas.
+   ===================================================================== */
+
+:root{
+  --ink:#0B1622;
+  --panel:#101D2B;
+  --panel-2:#152537;
+  --line:#24374B;
+  --paper:#E9EDF1;
+  --fg:#DCE6EF;
+  --fg-dim:#7C93A8;
+  --accent:#00C2A8;      /* ruta / acento principal */
+  --accent-2:#FFB020;    /* destino / advertencia */
+  --live:#3E8BFF;        /* posición en vivo */
+  --place:#B388FF;       /* lugares propios (definidos por el administrador) */
+  --danger:#FF5D5D;
+  --radius:10px;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;margin:0;}
+body{
+  font-family:'Space Grotesk', sans-serif;
+  background:var(--ink);
+  color:var(--fg);
+}
+::-webkit-scrollbar{width:8px;}
+::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+
+/* ---------- barra superior compartida ---------- */
+.site-topbar{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  height:56px;
+  min-height:56px;
+  padding:0 18px;
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
+  position:relative;
+  z-index:2500;
+}
+.site-back{
+  color:var(--fg-dim);
+  text-decoration:none;
+  font-size:13px;
+  font-weight:500;
+  white-space:nowrap;
+  padding:6px 10px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  transition:border-color 0.15s ease, color 0.15s ease;
+}
+.site-back:hover{border-color:var(--accent);color:var(--accent);}
+
+.site-search{
+  flex:1;
+  max-width:420px;
+  position:relative;
+}
+.site-search input{
+  width:100%;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--fg);
+  padding:9px 12px;
+  border-radius:8px;
+  font-family:'Space Grotesk', sans-serif;
+  font-size:13.5px;
+  outline:none;
+}
+.site-search input::placeholder{color:var(--fg-dim);}
+.site-search input:focus{border-color:var(--accent);}
+.site-search ul{
+  display:none;
+  list-style:none;
+  margin:6px 0 0 0;
+  padding:6px;
+  position:absolute;
+  top:100%;
+  left:0;
+  right:0;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:10px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.45);
+  max-height:280px;
+  overflow-y:auto;
+}
+.site-search ul.open{display:block;}
+.site-search li{
+  padding:9px 10px;
+  border-radius:7px;
+  cursor:pointer;
+  font-size:13px;
+  color:var(--fg);
+}
+.site-search li:hover, .site-search li.active{background:var(--panel-2);color:var(--accent);}
+.site-search .empty{color:var(--fg-dim);cursor:default;}
+.site-search .empty:hover{background:none;color:var(--fg-dim);}
+
+.site-brand{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:700;
+  font-size:17px;
+  letter-spacing:0.5px;
+  white-space:nowrap;
+}
+.site-brand .dot{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 4px rgba(0,194,168,0.15);
+}
+
+/* ---------- botones genéricos compartidos ---------- */
+.btn{
+  border:none;
+  border-radius:9px;
+  font-weight:600;
+  font-size:13.5px;
+  cursor:pointer;
+  font-family:'Space Grotesk', sans-serif;
+  padding:11px 18px;
+}
+.btn-primary{background:var(--accent);color:#04211C;}
+.btn-primary:hover{filter:brightness(1.08);}
+.btn-place{background:var(--place);color:#1B0E33;}
+.btn-place:hover{filter:brightness(1.08);}
+.btn-outline{background:transparent;border:1px solid var(--line);color:var(--fg);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+/* =====================================================================
+   MODAL COMPARTIR (link + QR) — usado en mapa.html y lugar.html
+   ===================================================================== */
+#shareModalOverlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(6,11,17,0.72);
+  z-index:3000;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+#shareModalOverlay.open{display:flex;}
+#shareModal{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:14px;
+  max-width:320px;
+  width:100%;
+  padding:22px;
+  position:relative;
+  text-align:center;
+}
+#shareModalClose{
+  position:absolute;
+  top:10px; right:10px;
+  background:transparent;
+  border:1px solid var(--line);
+  color:var(--fg);
+  width:28px;height:28px;
+  border-radius:50%;
+  cursor:pointer;
+  font-size:13px;
+}
+#shareModalClose:hover{border-color:var(--danger);color:var(--danger);}
+#shareTitle{margin:0 0 16px 0;font-size:15px;color:var(--fg);}
+#shareQrCanvas{
+  border-radius:8px;
+  margin:0 auto 16px auto;
+  display:block;
+  background:#fff;
+  padding:8px;
+}
+#shareLinkRow{display:flex;gap:6px;}
+#shareLinkInput{
+  flex:1;
+  min-width:0;
+  background:var(--panel-2);
+  border:1px solid var(--line);
+  color:var(--fg-dim);
+  padding:9px 10px;
+  border-radius:8px;
+  font-family:'JetBrains Mono', monospace;
+  font-size:11px;
+}
+#shareCopyBtn{
+  background:var(--accent);
+  color:#04211C;
+  border:none;
+  padding:0 14px;
+  border-radius:8px;
+  font-weight:600;
+  font-size:12.5px;
+  cursor:pointer;
+}
+#shareCopiedMsg{
+  margin:10px 0 0 0;
+  font-size:12px;
+  color:var(--accent);
+  opacity:0;
+  transition:opacity 0.2s ease;
+}
+#shareCopiedMsg.show{opacity:1;}

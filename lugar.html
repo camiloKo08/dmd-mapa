@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lugar — DMD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  body{ overflow-y:auto; }
+  .place-page{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 0 60px 0;
+  }
+  #gallery{
+    display:flex;
+    gap:2px;
+    overflow-x:auto;
+    background:var(--panel-2);
+    height:320px;
+  }
+  #gallery img{ height:100%; width:auto; flex:0 0 auto; object-fit:cover; }
+  #gallery.empty{ display:flex; align-items:center; justify-content:center; color:var(--fg-dim); font-size:13px; }
+
+  .place-body{ padding:26px 24px; }
+  .place-body h1{ margin:0 0 6px 0; font-size:26px; font-weight:700; }
+  .place-desc{ margin:0 0 18px 0; color:var(--fg-dim); font-size:14px; }
+  .place-info{ font-size:14px; line-height:1.7; color:var(--fg); white-space:pre-line; margin:0 0 20px 0; }
+  .place-info:empty{ display:none; }
+
+  #videoWrap{ margin-bottom:20px; }
+  #videoWrap iframe, #videoWrap video{
+    width:100%; aspect-ratio:16/9; border:none; border-radius:10px; background:#000;
+  }
+
+  .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+
+  /* ---------- panel de administrador ---------- */
+  #adminPanel{ display:none; margin-top:28px; padding-top:20px; border-top:1px dashed var(--line); }
+  #adminPanel.on{ display:block; }
+  #adminPanel .admin-title{
+    font-size:11.5px; text-transform:uppercase; letter-spacing:1px;
+    color:var(--accent-2); font-weight:600; margin-bottom:10px;
+  }
+  .admin-hint{ font-size:12.5px; color:var(--fg-dim); line-height:1.5; margin:0 0 12px 0; }
+  #adminLoginBox input{
+    width:100%; max-width:280px; display:block;
+    background:var(--panel-2); border:1px solid var(--line); color:var(--fg);
+    padding:9px 10px; border-radius:8px; font-size:13px; margin-bottom:8px;
+    font-family:'Space Grotesk', sans-serif;
+  }
+  .admin-error{ font-size:11.5px; color:var(--danger); margin-top:6px; }
+  #adminLoggedInBox a{ color:var(--accent); cursor:pointer; }
+  #adminAddImageBtn{ margin:10px 0 14px 0; }
+  #adminAddImageBtn:disabled{ opacity:0.5; cursor:not-allowed; }
+  #adminPreview{ display:flex; flex-wrap:wrap; gap:8px; }
+  #adminPreview .thumb{
+    width:84px; height:84px; border-radius:8px; overflow:hidden;
+    border:1px solid var(--line); background:var(--panel-2); position:relative;
+  }
+  #adminPreview .thumb img, #adminPreview .thumb video{ width:100%; height:100%; object-fit:cover; }
+  #adminPreview .thumb.uploading{ opacity:0.55; }
+  #adminPreview .thumb .tag{
+    position:absolute; bottom:0; left:0; right:0;
+    background:rgba(6,11,17,0.75); color:var(--fg);
+    font-size:9px; text-align:center; padding:2px 0;
+  }
+
+  #notFound{ display:none; padding:60px 24px; text-align:center; color:var(--fg-dim); }
+</style>
+</head>
+<body>
+
+<header class="site-topbar">
+  <a href="index.html" class="site-back">← Inicio</a>
+  <div class="site-search">
+    <input type="text" id="topSearchInput" placeholder="Buscar un lugar turístico…" autocomplete="off">
+    <ul id="topSearchResults"></ul>
+  </div>
+  <div class="site-brand"><span class="dot"></span>DMD</div>
+</header>
+
+<div id="notFound">
+  <p>No encontramos este lugar.</p>
+  <a href="index.html" class="btn btn-outline">← Volver al inicio</a>
+</div>
+
+<div class="place-page" id="placePage" style="display:none;">
+  <div id="gallery"></div>
+  <div class="place-body">
+    <h1 id="placeName"></h1>
+    <p class="place-desc" id="placeDesc"></p>
+    <p class="place-info" id="placeInfo"></p>
+    <div id="videoWrap"></div>
+
+    <div class="actions">
+      <button id="goBtn" class="btn btn-place">Cómo llegar</button>
+      <button id="shareBtn" class="btn btn-outline">🔗 Compartir este lugar</button>
+      <a href="index.html" class="btn btn-outline">← Volver al inicio</a>
+    </div>
+
+    <div id="adminPanel">
+      <div class="admin-title">⚙ Modo administrador</div>
+
+      <div id="adminLoginBox">
+        <p class="admin-hint">Inicia sesión para poder agregar imágenes que verán todos los visitantes.</p>
+        <input type="email" id="adminEmailInput" placeholder="Correo" autocomplete="username">
+        <input type="password" id="adminPassInput" placeholder="Contraseña" autocomplete="current-password">
+        <button id="adminLoginBtn" type="button" class="btn btn-outline">Iniciar sesión</button>
+        <p id="adminLoginError" class="admin-error"></p>
+      </div>
+
+      <div id="adminLoggedInBox" style="display:none;">
+        <p class="admin-hint">Sesión iniciada como <strong id="adminEmailLabel"></strong> — <a id="adminLogoutBtn">cerrar sesión</a></p>
+        <button id="adminAddImageBtn" type="button" class="btn btn-place">+ Agregar imagen</button>
+        <input type="file" id="adminFileInput" accept="image/*,video/*" multiple style="display:none;">
+        <div id="adminPreview"></div>
+        <p id="adminUploadStatus" class="admin-hint"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="shareModalOverlay">
+  <div id="shareModal">
+    <button id="shareModalClose">✕</button>
+    <h3 id="shareTitle">Compartir</h3>
+    <canvas id="shareQrCanvas"></canvas>
+    <div id="shareLinkRow">
+      <input id="shareLinkInput" type="text" readonly>
+      <button id="shareCopyBtn">Copiar</button>
+    </div>
+    <p id="shareCopiedMsg">¡Link copiado!</p>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="site-data.js"></script>
+<script src="topsearch.js"></script>
+<script src="share.js"></script>
+<script>
+(function(){
+  const slug = new URLSearchParams(window.location.search).get('p');
+  const place = getPlaceBySlug(slug);
+
+  if(!place){
+    document.getElementById('notFound').style.display = 'block';
+    return;
+  }
+  document.getElementById('placePage').style.display = 'block';
+  document.title = place.name + ' — DMD';
+
+  document.getElementById('placeName').textContent = place.name;
+  document.getElementById('placeDesc').textContent = place.desc || '';
+  document.getElementById('placeInfo').textContent = place.info || '';
+
+  const gallery = document.getElementById('gallery');
+  const videoWrap = document.getElementById('videoWrap');
+
+  function renderPhotos(photos){
+    gallery.innerHTML = '';
+    if(!photos.length){ gallery.classList.add('empty'); gallery.textContent = 'Todavía no hay fotos de este lugar.'; return; }
+    gallery.classList.remove('empty');
+    photos.forEach(function(url){
+      const img = document.createElement('img');
+      img.src = url; img.alt = place.name;
+      gallery.appendChild(img);
+    });
+  }
+  renderPhotos(place.photos || []);
+
+  function youtubeEmbedUrl(url){
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{6,})/);
+    return m ? 'https://www.youtube.com/embed/' + m[1] : null;
+  }
+  if(place.video){
+    const yt = youtubeEmbedUrl(place.video);
+    videoWrap.innerHTML = yt
+      ? '<iframe src="' + yt + '" allowfullscreen allow="autoplay; encrypted-media"></iframe>'
+      : '<video src="' + place.video + '" controls></video>';
+  }
+
+  // "Cómo llegar" manda al mapa ya centrado en este lugar, con la ruta trazada
+  document.getElementById('goBtn').addEventListener('click', function(){
+    window.location.href = 'mapa.html?p=' + place.slug;
+  });
+
+  // compartir esta ficha
+  document.getElementById('shareBtn').addEventListener('click', function(){
+    const url = window.location.origin + window.location.pathname.replace('lugar.html', 'lugar.html') + '?p=' + place.slug;
+    window.__openShareModal('Compartir "' + place.name + '"', url);
+  });
+
+  // =====================================================================
+  //  FIREBASE — administrador: inicio de sesión y subida de imágenes.
+  //  Y lectura pública de fotos en la nube para CUALQUIER visitante.
+  // =====================================================================
+  let fb = { auth:null, db:null, storage:null, ready:false, user:null };
+  try{
+    if(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf('TU_') !== 0){
+      firebase.initializeApp(FIREBASE_CONFIG);
+      fb.auth = firebase.auth();
+      fb.db = firebase.firestore();
+      fb.storage = firebase.storage();
+      fb.ready = true;
+      fb.auth.onAuthStateChanged(function(user){ fb.user = user; refreshAdminUI(); });
+    }
+  } catch(e){ console.warn('Firebase no configurado todavía:', e); }
+
+  // trae, para CUALQUIER visitante, las fotos/video que ya se hayan
+  // publicado en la nube para este lugar (además de las fijas del código)
+  function loadCloudMedia(){
+    if(!fb.ready) return;
+    fb.db.collection('places').doc(place.slug).get().then(function(doc){
+      if(!doc.exists) return;
+      const items = doc.data().photos || [];
+      items.forEach(function(item){
+        if(item.type === 'video'){
+          videoWrap.innerHTML += '<video src="' + item.url + '" controls></video>';
+        } else {
+          gallery.classList.remove('empty');
+          const img = document.createElement('img');
+          img.src = item.url; img.alt = place.name;
+          gallery.appendChild(img);
+        }
+      });
+    }).catch(function(err){ console.warn('No se pudieron cargar fotos de la nube:', err); });
+  }
+  loadCloudMedia();
+
+  // ---------- modo administrador: solo con ?admin=1 en el link ----------
+  const isAdmin = new URLSearchParams(window.location.search).get('admin') === '1';
+  const adminPanel = document.getElementById('adminPanel');
+  const loginBox = document.getElementById('adminLoginBox');
+  const loggedInBox = document.getElementById('adminLoggedInBox');
+  const addBtn = document.getElementById('adminAddImageBtn');
+  const fileInput = document.getElementById('adminFileInput');
+  const preview = document.getElementById('adminPreview');
+  const uploadStatus = document.getElementById('adminUploadStatus');
+
+  function refreshAdminUI(){
+    if(!isAdmin || !fb.ready){ adminPanel.classList.remove('on'); return; }
+    adminPanel.classList.add('on');
+    if(fb.user){
+      loginBox.style.display = 'none';
+      loggedInBox.style.display = 'block';
+      document.getElementById('adminEmailLabel').textContent = fb.user.email;
+      addBtn.disabled = false;
+    } else {
+      loginBox.style.display = 'block';
+      loggedInBox.style.display = 'none';
+    }
+  }
+  refreshAdminUI();
+
+  document.getElementById('adminLoginBtn').addEventListener('click', function(){
+    const email = document.getElementById('adminEmailInput').value.trim();
+    const pass = document.getElementById('adminPassInput').value;
+    const errEl = document.getElementById('adminLoginError');
+    errEl.textContent = '';
+    if(!fb.ready){ errEl.textContent = 'Firebase todavía no está configurado en el código.'; return; }
+    fb.auth.signInWithEmailAndPassword(email, pass).catch(function(err){
+      errEl.textContent = 'No se pudo iniciar sesión: ' + err.message;
+    });
+  });
+  document.getElementById('adminLogoutBtn').addEventListener('click', function(){
+    if(fb.ready) fb.auth.signOut();
+  });
+
+  addBtn.addEventListener('click', function(){ fileInput.click(); });
+  fileInput.addEventListener('change', function(){
+    const files = Array.from(fileInput.files);
+    if(!files.length || !fb.ready || !fb.user) return;
+
+    files.forEach(function(file){
+      const localUrl = URL.createObjectURL(file);
+      const thumb = document.createElement('div');
+      thumb.className = 'thumb uploading';
+      thumb.innerHTML = (file.type.startsWith('video/')
+        ? '<video src="' + localUrl + '" muted></video>'
+        : '<img src="' + localUrl + '">') + '<span class="tag">Subiendo…</span>';
+      preview.appendChild(thumb);
+
+      const path = 'places/' + place.slug + '/' + Date.now() + '_' + file.name;
+      const ref = fb.storage.ref().child(path);
+      ref.put(file).then(function(){
+        return ref.getDownloadURL();
+      }).then(function(url){
+        return fb.db.collection('places').doc(place.slug).set({
+          photos: firebase.firestore.FieldValue.arrayUnion({
+            url: url,
+            type: file.type.startsWith('video/') ? 'video' : 'photo',
+            uploadedAt: Date.now()
+          })
+        }, { merge: true });
+      }).then(function(){
+        thumb.classList.remove('uploading');
+        thumb.querySelector('.tag').textContent = '¡Publicada!';
+        uploadStatus.textContent = 'Listo — ya es visible para todos los visitantes.';
+      }).catch(function(err){
+        thumb.querySelector('.tag').textContent = 'Error';
+        uploadStatus.textContent = 'No se pudo subir: ' + err.message;
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

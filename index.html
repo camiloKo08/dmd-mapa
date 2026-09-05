@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DMD — Turismo Tausa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  body{ overflow-x:hidden; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1080px;
+    margin:0 auto;
+    padding:56px 20px 36px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:40px;
+  }
+  .hero-text{ flex:1; min-width:0; }
+  .hero-text h1{
+    font-size:40px;
+    font-weight:800;
+    line-height:1.15;
+    letter-spacing:0.3px;
+    margin:0 0 14px 0;
+  }
+  .hero-text h1 .accent{ color:var(--accent); }
+  .hero-text p{
+    color:var(--fg-dim);
+    font-size:15px;
+    line-height:1.6;
+    margin:0;
+    max-width:480px;
+  }
+  .hero-logo{
+    flex:0 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hero-logo img{
+    width:150px;
+    height:150px;
+    object-fit:contain;
+    filter:drop-shadow(0 8px 24px rgba(0,194,168,0.20));
+  }
+
+  @media (max-width: 700px){
+    .hero{ flex-direction:column; text-align:center; padding-top:36px; gap:20px; }
+    .hero-text p{ max-width:none; }
+    .hero-text h1{ font-size:30px; }
+    .hero-logo img{ width:110px; height:110px; }
+  }
+
+  /* ---------- section title ---------- */
+  .section-title{
+    max-width:1000px;
+    margin:0 auto;
+    padding:0 20px;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--fg-dim);
+  }
+
+  /* ---------- grid de botones ---------- */
+  .home-grid{
+    max-width:1000px;
+    margin:32px auto 60px auto;
+    padding:0 20px;
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(230px, 1fr));
+    gap:14px;
+  }
+
+  /* botón del mapa — sin cambios de estilo */
+  .map-card{
+    grid-column:1 / -1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    background:linear-gradient(135deg, rgba(0,194,168,0.14), rgba(62,139,255,0.10));
+    border:1px solid var(--accent);
+    border-radius:14px;
+    padding:18px;
+    text-decoration:none;
+    color:var(--fg);
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .map-card:hover{ transform:translateY(-2px); }
+  .map-card .icon{
+    width:44px;height:44px;
+    border-radius:10px;
+    background:rgba(0,194,168,0.18);
+    color:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    flex:0 0 auto;
+  }
+  .map-card .name{ font-weight:600; font-size:16px; }
+  .map-card .arrow{ color:var(--accent); font-size:20px; flex:0 0 auto; }
+
+  /* botones de lugar — más minimalistas y elegantes, nombre completo sin recortar */
+  .place-card{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-align:left;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:14px 16px;
+    text-decoration:none;
+    color:var(--fg);
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .place-card:hover{ border-color:var(--place); background:var(--panel); }
+  .place-card .icon{
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--place);
+    flex:0 0 auto;
+  }
+  .place-card .text{ min-width:0; }
+  .place-card .name{
+    display:block;
+    font-weight:600;
+    font-size:13.5px;
+    line-height:1.35;
+    white-space:normal;      /* nunca se corta el nombre */
+    word-break:break-word;
+  }
+  .place-card .desc{
+    display:block;
+    font-size:11.5px;
+    color:var(--fg-dim);
+    line-height:1.4;
+    margin-top:3px;
+  }
+
+  /* ---------- pie de página: contacto ---------- */
+  .site-footer{
+    border-top:1px solid var(--line);
+    padding:36px 20px 40px 20px;
+  }
+  .footer-inner{
+    max-width:1000px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:28px;
+  }
+  .footer-block .footer-title{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--fg-dim);
+    margin-bottom:10px;
+  }
+  .footer-block p, .footer-block a{
+    font-size:13px;
+    color:var(--fg);
+    line-height:1.8;
+    text-decoration:none;
+    display:block;
+  }
+  .footer-block a:hover{ color:var(--accent); }
+  .footer-note{
+    max-width:1000px;
+    margin:28px auto 0 auto;
+    padding-top:18px;
+    border-top:1px solid var(--line);
+    font-size:11px;
+    color:var(--fg-dim);
+    text-align:center;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-topbar">
+  <span style="width:70px;"></span>
+  <div class="site-search">
+    <input type="text" id="topSearchInput" placeholder="Buscar un lugar turístico…" autocomplete="off">
+    <ul id="topSearchResults"></ul>
+  </div>
+  <div class="site-brand"><span class="dot"></span>DMD</div>
+</header>
+
+<div class="hero">
+  <div class="hero-text">
+    <h1>ENCUENTRA, <span class="accent">EXPLORA</span> Y DISFRUTA</h1>
+    <p>Turismo de Tausa — explora cada lugar y traza tu ruta con ubicación en tiempo real.</p>
+  </div>
+  <div class="hero-logo">
+    <img src="logo-dmd.png" alt="Logo DMD — Directorio Mapa Digital, Tausa">
+  </div>
+</div>
+
+<div class="section-title">Empieza por aquí</div>
+<div class="home-grid">
+  <a class="place-card map-card" href="mapa.html">
+    <span class="icon">🗺️</span>
+    <span class="name">Mapa GPS — ver todos los lugares y trazar ruta</span>
+    <span class="arrow">→</span>
+  </a>
+
+  <div id="placeCardsWrap" style="display:contents;"></div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-block">
+      <div class="footer-title">Creado por</div>
+      <p>Juan Pérez</p>
+      <p>Desarrollo web y mapas — DMD Tausa</p>
+    </div>
+    <div class="footer-block">
+      <div class="footer-title">Contacto</div>
+      <a href="tel:+573000000000">+57 300 000 0000</a>
+      <a href="mailto:contacto@dmdtausa.com">contacto@dmdtausa.com</a>
+    </div>
+    <div class="footer-block">
+      <div class="footer-title">Encuéntranos también en</div>
+      <a href="https://instagram.com/dmd.tausa" target="_blank" rel="noopener">Instagram — @dmd.tausa</a>
+      <a href="https://facebook.com/dmdtausa" target="_blank" rel="noopener">Facebook — DMD Tausa</a>
+      <a href="https://wa.me/573000000000" target="_blank" rel="noopener">WhatsApp — +57 300 000 0000</a>
+    </div>
+  </div>
+  <div class="footer-note">Datos de ejemplo — reemplázalos por los tuyos en index.html (bloque "footer-inner").</div>
+</footer>
+
+<script src="site-data.js"></script>
+<script src="topsearch.js"></script>
+<script>
+  const wrap = document.getElementById('placeCardsWrap');
+  PLACES.forEach(function(place){
+    const a = document.createElement('a');
+    a.className = 'place-card';
+    a.href = 'lugar.html?p=' + place.slug;
+    a.innerHTML =
+      '<span class="icon"></span>' +
+      '<span class="text">' +
+        '<span class="name">' + place.name + '</span>' +
+        '<span class="desc">' + (place.desc || '') + '</span>' +
+      '</span>';
+    wrap.appendChild(a);
+  });
+</script>
+</body>
+</html>
