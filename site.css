@@ -61,12 +61,26 @@ body{
   max-width:420px;
   position:relative;
 }
+.site-search::before{
+  content:'';
+  position:absolute;
+  left:12px;
+  top:50%;
+  width:14px;
+  height:14px;
+  transform:translateY(-50%);
+  background-color:var(--fg-dim);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") center / contain no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>") center / contain no-repeat;
+  pointer-events:none;
+  z-index:1;
+}
 .site-search input{
   width:100%;
   background:var(--panel-2);
   border:1px solid var(--line);
   color:var(--fg);
-  padding:9px 12px;
+  padding:9px 12px 9px 34px;
   border-radius:8px;
   font-family:'Space Grotesk', sans-serif;
   font-size:13.5px;

@@ -8,13 +8,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 <style>
-  body{ overflow-x:hidden; }
+  body{ overflow-x:hidden; background:#FFFFFF; }
 
-  /* ---------- HERO ---------- */
+  /* ---------- HERO (franja azul, no muy oscura, para que el logo se lea bien) ---------- */
+  .hero-band{
+    background:linear-gradient(160deg, #2C6CA6, #1F4E80);
+  }
   .hero{
     max-width:1080px;
     margin:0 auto;
-    padding:56px 20px 36px 20px;
+    padding:56px 20px 44px 20px;
     display:flex;
     align-items:center;
     justify-content:space-between;
@@ -27,10 +30,11 @@
     line-height:1.15;
     letter-spacing:0.3px;
     margin:0 0 14px 0;
+    color:#FFFFFF;
   }
-  .hero-text h1 .accent{ color:var(--accent); }
+  .hero-text h1 .accent{ color:#7CF2D8; }
   .hero-text p{
-    color:var(--fg-dim);
+    color:rgba(255,255,255,0.78);
     font-size:15px;
     line-height:1.6;
     margin:0;
@@ -41,30 +45,39 @@
     display:flex;
     align-items:center;
     justify-content:center;
+    background:rgba(255,255,255,0.94);
+    border-radius:50%;
+    padding:10px;
   }
   .hero-logo img{
-    width:150px;
-    height:150px;
+    width:140px;
+    height:140px;
     object-fit:contain;
-    filter:drop-shadow(0 8px 24px rgba(0,194,168,0.20));
+    display:block;
   }
 
   @media (max-width: 700px){
     .hero{ flex-direction:column; text-align:center; padding-top:36px; gap:20px; }
     .hero-text p{ max-width:none; }
     .hero-text h1{ font-size:30px; }
-    .hero-logo img{ width:110px; height:110px; }
+    .hero-logo img{ width:104px; height:104px; }
+  }
+
+  /* ---------- sección blanca: título + botones ---------- */
+  .content-wrap{
+    background:#FFFFFF;
+    padding-bottom:10px;
   }
 
   /* ---------- section title ---------- */
   .section-title{
     max-width:1000px;
     margin:0 auto;
-    padding:0 20px;
+    padding:32px 20px 0 20px;
     font-size:11.5px;
     text-transform:uppercase;
     letter-spacing:1px;
-    color:var(--fg-dim);
+    color:#8A97A6;
   }
 
   /* ---------- grid de botones ---------- */
@@ -77,33 +90,33 @@
     gap:14px;
   }
 
-  /* botón del mapa — sin cambios de estilo */
+  /* botón del mapa — mismo estilo, ajustado a fondo blanco */
   .map-card{
     grid-column:1 / -1;
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:16px;
-    background:linear-gradient(135deg, rgba(0,194,168,0.14), rgba(62,139,255,0.10));
+    background:linear-gradient(135deg, rgba(0,194,168,0.10), rgba(44,108,166,0.08));
     border:1px solid var(--accent);
     border-radius:14px;
     padding:18px;
     text-decoration:none;
-    color:var(--fg);
+    color:#0B1622;
     transition:border-color 0.15s ease, transform 0.15s ease;
   }
   .map-card:hover{ transform:translateY(-2px); }
   .map-card .icon{
     width:44px;height:44px;
     border-radius:10px;
-    background:rgba(0,194,168,0.18);
-    color:var(--accent);
+    background:rgba(0,194,168,0.16);
+    color:#00967F;
     display:flex;align-items:center;justify-content:center;
     font-size:20px;
     flex:0 0 auto;
   }
   .map-card .name{ font-weight:600; font-size:16px; }
-  .map-card .arrow{ color:var(--accent); font-size:20px; flex:0 0 auto; }
+  .map-card .arrow{ color:#00967F; font-size:20px; flex:0 0 auto; }
 
   /* botones de lugar — más minimalistas y elegantes, nombre completo sin recortar */
   .place-card{
@@ -111,16 +124,16 @@
     align-items:center;
     gap:12px;
     text-align:left;
-    background:transparent;
-    border:1px solid var(--line);
+    background:#F8FAFC;
+    border:1px solid #E4E9EF;
     border-radius:12px;
     padding:14px 16px;
     text-decoration:none;
-    color:var(--fg);
+    color:#12202E;
     cursor:pointer;
-    transition:border-color 0.15s ease, background 0.15s ease;
+    transition:border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
   }
-  .place-card:hover{ border-color:var(--place); background:var(--panel); }
+  .place-card:hover{ border-color:var(--place); background:#FFFFFF; box-shadow:0 4px 16px rgba(20,30,45,0.08); }
   .place-card .icon{
     width:8px;height:8px;
     border-radius:50%;
@@ -139,14 +152,15 @@
   .place-card .desc{
     display:block;
     font-size:11.5px;
-    color:var(--fg-dim);
+    color:#69788A;
     line-height:1.4;
     margin-top:3px;
   }
 
   /* ---------- pie de página: contacto ---------- */
   .site-footer{
-    border-top:1px solid var(--line);
+    background:#FFFFFF;
+    border-top:1px solid #E4E9EF;
     padding:36px 20px 40px 20px;
   }
   .footer-inner{
@@ -160,24 +174,24 @@
     font-size:10.5px;
     text-transform:uppercase;
     letter-spacing:1px;
-    color:var(--fg-dim);
+    color:#8A97A6;
     margin-bottom:10px;
   }
   .footer-block p, .footer-block a{
     font-size:13px;
-    color:var(--fg);
+    color:#25313E;
     line-height:1.8;
     text-decoration:none;
     display:block;
   }
-  .footer-block a:hover{ color:var(--accent); }
+  .footer-block a:hover{ color:#1F4E80; }
   .footer-note{
     max-width:1000px;
     margin:28px auto 0 auto;
     padding-top:18px;
-    border-top:1px solid var(--line);
+    border-top:1px solid #E4E9EF;
     font-size:11px;
-    color:var(--fg-dim);
+    color:#8A97A6;
     text-align:center;
   }
 </style>
@@ -193,6 +207,7 @@
   <div class="site-brand"><span class="dot"></span>DMD</div>
 </header>
 
+<div class="hero-band">
 <div class="hero">
   <div class="hero-text">
     <h1>ENCUENTRA, <span class="accent">EXPLORA</span> Y DISFRUTA</h1>
@@ -202,7 +217,9 @@
     <img src="logo-dmd.png" alt="Logo DMD — Directorio Mapa Digital, Tausa">
   </div>
 </div>
+</div>
 
+<div class="content-wrap">
 <div class="section-title">Empieza por aquí</div>
 <div class="home-grid">
   <a class="place-card map-card" href="mapa.html">
@@ -212,6 +229,7 @@
   </a>
 
   <div id="placeCardsWrap" style="display:contents;"></div>
+</div>
 </div>
 
 <footer class="site-footer">
