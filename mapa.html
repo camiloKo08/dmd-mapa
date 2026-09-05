@@ -38,6 +38,24 @@
   #telemetry .label{ color:var(--fg-dim); text-transform:uppercase; font-size:9.5px; letter-spacing:1px; }
   #telemetry .coords{ color:var(--fg); letter-spacing:0.3px; }
 
+  #fixLocationRow{ margin:8px 20px 0 20px; }
+  #fixLocationRow button{
+    width:100%;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--fg-dim);
+    padding:8px 10px;
+    border-radius:8px;
+    font-size:11.5px;
+    cursor:pointer;
+    font-family:'Space Grotesk', sans-serif;
+    text-align:left;
+  }
+  #fixLocationRow button:hover{ border-color:var(--accent-2); color:var(--accent-2); }
+  #fixLocationBtn.active{ border-color:var(--accent-2); color:var(--accent-2); background:rgba(255,176,32,0.08); }
+  #undoFixLocationBtn{ margin-top:6px; }
+  .live-marker.manual{ background:var(--accent-2); box-shadow:0 0 0 4px rgba(255,176,32,0.25), 0 2px 6px rgba(0,0,0,0.35); }
+
   #placesSection{ padding:16px 20px 4px 20px; border-bottom:1px solid var(--line); }
   #placesSection .sectionTitle{ font-size:11px; text-transform:uppercase; letter-spacing:1px; color:var(--fg-dim); margin-bottom:10px; display:flex; align-items:center; gap:6px; }
   #placesSection .sectionTitle .sw{ width:8px;height:8px;border-radius:50%; background:var(--place); }
@@ -171,6 +189,10 @@
         <span class="label">Tú</span>
         <span class="coords" id="myCoords">buscando señal…</span>
       </div>
+      <div id="fixLocationRow">
+        <button id="fixLocationBtn" type="button">📍 ¿Tu ubicación no es correcta? Corrígela</button>
+        <button id="undoFixLocationBtn" type="button" style="display:none;">↺ Usar mi ubicación automática de nuevo</button>
+      </div>
 
       <div id="placesSection">
         <div class="sectionTitle"><span class="sw"></span>Nuestros lugares</div>
@@ -250,6 +272,8 @@
   let lastRouteCalcTime = 0;
   let routeNeedsFit = false;
   let currentDestSlug = null;
+  let manualOverride = false;    // true cuando el usuario fijó su ubicación a mano
+  let awaitingManualFix = false; // true mientras espera el próximo clic en el mapa
 
   function distMeters(lat1, lng1, lat2, lng2){
     const R = 6371000;
@@ -269,6 +293,7 @@
   }).addTo(map);
 
   const liveIcon = L.divIcon({ className:'', html:'<div class="live-marker"></div>', iconSize:[18,18], iconAnchor:[9,9] });
+  const liveIconManual = L.divIcon({ className:'', html:'<div class="live-marker manual"></div>', iconSize:[18,18], iconAnchor:[9,9] });
   const destIcon = L.divIcon({ className:'', html:'<div class="dest-marker"></div>', iconSize:[14,14], iconAnchor:[7,12] });
   const placeIcon = L.divIcon({ className:'', html:'<div class="place-marker"></div>', iconSize:[16,16], iconAnchor:[8,14] });
 
@@ -337,6 +362,8 @@
 
   // ---------- geolocalización en tiempo real ----------
   function onPosition(pos){
+    if(manualOverride) return; // el usuario ya fijó su ubicación a mano; no la pisamos con el GPS/wifi
+
     const { latitude, longitude, accuracy } = pos.coords;
 
     if(myPos && accuracy > 80){
@@ -351,9 +378,12 @@
       liveMarker = L.marker([latitude, longitude], { icon: liveIcon, zIndexOffset: 1000 }).addTo(map);
       accuracyCircle = L.circle([latitude, longitude], { radius: accuracy, color:'#3E8BFF', weight:1, fillOpacity:0.08 }).addTo(map);
     } else {
+      liveMarker.setIcon(liveIcon);
       liveMarker.setLatLng([latitude, longitude]);
+      if(!accuracyCircle){ accuracyCircle = L.circle([latitude, longitude], { radius: accuracy, color:'#3E8BFF', weight:1, fillOpacity:0.08 }).addTo(map); }
       accuracyCircle.setLatLng([latitude, longitude]);
       accuracyCircle.setRadius(accuracy);
+      accuracyCircle.setStyle({ opacity:1, fillOpacity:0.08 });
     }
 
     if(firstFix){
@@ -368,6 +398,48 @@
       if(movedSinceLastCalc > 25 && (now - lastRouteCalcTime) > 8000){ drawRoute(); }
     }
   }
+
+  // ---------- corrección manual de la ubicación (para cuando el GPS/wifi se equivoca) ----------
+  const fixLocationBtn = document.getElementById('fixLocationBtn');
+  const undoFixLocationBtn = document.getElementById('undoFixLocationBtn');
+
+  fixLocationBtn.addEventListener('click', function(){
+    awaitingManualFix = true;
+    fixLocationBtn.classList.add('active');
+    statusEl.textContent = 'Toca el punto exacto del mapa donde te encuentras.';
+    if(isMobileLayout()) closeMobilePanel();
+  });
+
+  function setManualPosition(lat, lng){
+    manualOverride = true;
+    myPos = { lat: lat, lng: lng };
+    coordsEl.textContent = lat.toFixed(5) + ', ' + lng.toFixed(5) + '  (ajustada a mano)';
+
+    if(accuracyCircle){ map.removeLayer(accuracyCircle); accuracyCircle = null; }
+    if(!liveMarker){
+      liveMarker = L.marker([lat, lng], { icon: liveIconManual, zIndexOffset: 1000 }).addTo(map);
+    } else {
+      liveMarker.setIcon(liveIconManual);
+      liveMarker.setLatLng([lat, lng]);
+    }
+
+    firstFix = false;
+    fixLocationBtn.classList.remove('active');
+    fixLocationBtn.style.display = 'none';
+    undoFixLocationBtn.style.display = 'block';
+    map.setView([lat, lng], 16);
+    statusEl.textContent = 'Ubicación ajustada. Elige un lugar, busca una dirección, o toca el mapa para trazar una ruta.';
+
+    if(destMarker) drawRoute();
+  }
+
+  undoFixLocationBtn.addEventListener('click', function(){
+    manualOverride = false;
+    undoFixLocationBtn.style.display = 'none';
+    fixLocationBtn.style.display = 'block';
+    statusEl.textContent = 'Volviendo a tu ubicación automática…';
+  });
+
   function onPositionError(err){
     coordsEl.textContent = 'sin permiso de ubicación';
     statusEl.textContent = 'No pudimos acceder a tu ubicación (' + err.message + '). Puedes activarla desde los permisos del navegador, o tocar el mapa para fijar un punto de partida manual.';
@@ -429,6 +501,11 @@
 
   // ---------- selección por clic en el mapa ----------
   map.on('click', function(e){
+    if(awaitingManualFix){
+      awaitingManualFix = false;
+      setManualPosition(e.latlng.lat, e.latlng.lng);
+      return;
+    }
     selectDestination(e.latlng.lat, e.latlng.lng, 'Punto seleccionado en el mapa');
   });
 
