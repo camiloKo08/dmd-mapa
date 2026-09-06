@@ -41,6 +41,57 @@
   .actions .btn-outline{ background:#FFFFFF; border:1px solid #D8E0E9; color:#25313E; }
   .actions .btn-outline:hover{ border-color:#2C6CA6; color:#2C6CA6; }
 
+  /* ---------- secciones de la ficha ---------- */
+  .section-block{ margin:0 0 28px 0; }
+  .section-block:empty{ display:none; }
+  .section-block h3{
+    font-size:11.5px; text-transform:uppercase; letter-spacing:1px;
+    color:#8A97A6; margin:0 0 10px 0; font-weight:700;
+  }
+  .section-block .body-text{ font-size:14px; line-height:1.75; color:#25313E; margin:0; }
+
+  .quick-badges{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 22px 0; }
+  .badge-pill{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12.5px; font-weight:700; padding:6px 13px; border-radius:20px;
+  }
+  .badge-pill .lbl{ font-weight:500; opacity:0.85; font-size:11.5px; }
+  .badge-pill.verde{ background:#E6F7EE; color:#1B7A43; }
+  .badge-pill.amarillo{ background:#FFF6E0; color:#9A6D00; }
+  .badge-pill.rojo{ background:#FDECEC; color:#B23838; }
+
+  .leyenda-box{ background:#FBF6EC; border:1px solid #F0E4C8; border-radius:12px; padding:16px 18px; }
+  .leyenda-box .tag{ font-size:11px; text-transform:uppercase; letter-spacing:0.6px; color:#9C7A22; font-weight:700; margin-bottom:8px; display:block; }
+  .leyenda-box p{ margin:0; font-size:14px; line-height:1.7; color:#4A3B14; font-style:italic; }
+
+  .destacado-box{
+    background:linear-gradient(135deg, rgba(44,108,166,0.08), rgba(0,194,168,0.06));
+    border:1px solid #BFD9EC; border-radius:12px; padding:16px 18px;
+  }
+  .destacado-box .tag{ font-size:14.5px; font-weight:700; color:#1F4E80; margin-bottom:6px; display:block; }
+  .destacado-box p{ margin:0; font-size:13.5px; line-height:1.6; color:#25313E; }
+
+  .chip-list{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ background:#EEF6F4; color:#00745F; border:1px solid #CDEAE3; border-radius:20px; padding:6px 14px; font-size:12.5px; font-weight:600; }
+
+  .no-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .no-list li{
+    font-size:13.5px; color:#7A2E2E; background:#FDF1F1; border:1px solid #F5D6D6;
+    border-radius:8px; padding:9px 12px; display:flex; gap:8px; align-items:flex-start;
+  }
+  .no-list li::before{ content:'🚫'; flex:0 0 auto; font-size:12px; }
+
+  .badge-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:12px; }
+  .badge-card{ background:#F8FAFC; border:1px solid #E4E9EF; border-radius:12px; padding:14px 16px; }
+  .badge-card .label{ font-size:10.5px; text-transform:uppercase; letter-spacing:0.6px; color:#8A97A6; margin-bottom:8px; }
+
+  .contact-card{ background:#F8FAFC; border:1px solid #E4E9EF; border-radius:12px; padding:16px 18px; }
+  .contact-card + .contact-card{ margin-top:10px; }
+  .contact-card .name{ font-weight:700; font-size:13.5px; color:#12202E; margin-bottom:6px; }
+  .contact-card a{ font-size:13px; color:#2C6CA6; text-decoration:none; display:block; margin-top:2px; }
+  .contact-card a:hover{ text-decoration:underline; }
+  .contact-card .addr{ font-size:12px; color:#69788A; margin-top:4px; }
+
   /* ---------- panel de administrador ---------- */
   #adminPanel{ display:none; margin-top:28px; padding-top:20px; border-top:1px dashed #E4E9EF; }
   #adminPanel.on{ display:block; }
@@ -116,8 +167,71 @@
   <div class="place-body">
     <h1 id="placeName"></h1>
     <p class="place-desc" id="placeDesc"></p>
-    <p class="place-info" id="placeInfo"></p>
+
+    <div class="quick-badges" id="quickBadges"></div>
+
     <div id="videoWrap"></div>
+
+    <div class="section-block" id="blockHistoria">
+      <h3>Historia</h3>
+      <p class="body-text" id="txtHistoria"></p>
+    </div>
+
+    <div class="section-block" id="blockCultura">
+      <h3>Cultura y antepasados</h3>
+      <p class="body-text" id="txtCultura"></p>
+    </div>
+
+    <div class="section-block" id="blockAcontecimientos">
+      <h3>Acontecimientos importantes</h3>
+      <p class="body-text" id="txtAcontecimientos"></p>
+    </div>
+
+    <div class="section-block" id="blockLeyenda">
+      <div class="leyenda-box">
+        <span class="tag">📖 Leyenda popular — tradición oral, no un hecho histórico comprobado</span>
+        <p id="txtLeyenda"></p>
+      </div>
+    </div>
+
+    <div class="section-block" id="blockDestacado">
+      <div class="destacado-box">
+        <span class="tag" id="destacadoTitulo"></span>
+        <p id="destacadoTexto"></p>
+      </div>
+    </div>
+
+    <div class="section-block" id="blockActividades">
+      <h3>¿Qué puedes hacer?</h3>
+      <div class="chip-list" id="chipActividades"></div>
+    </div>
+
+    <div class="section-block" id="blockProhibiciones">
+      <h3>¿Qué no debes hacer?</h3>
+      <ul class="no-list" id="listProhibiciones"></ul>
+    </div>
+
+    <div class="section-block" id="blockInfo">
+      <h3>Recomendación adicional</h3>
+      <p class="body-text" id="txtInfo"></p>
+    </div>
+
+    <div class="section-block">
+      <h3>¿Necesitas ayuda o más información?</h3>
+      <div class="badge-grid">
+        <div class="contact-card">
+          <div class="name" id="municipioNombre"></div>
+          <a id="municipioTel" href="#"></a>
+          <a id="municipioCorreo" href="#"></a>
+          <div class="addr" id="municipioDireccion"></div>
+        </div>
+        <div class="contact-card">
+          <div class="name">Soporte de la página DMD</div>
+          <a id="dmdTel" href="#"></a>
+          <a id="dmdCorreo" href="#"></a>
+        </div>
+      </div>
+    </div>
 
     <div class="actions">
       <button id="goBtn" class="btn btn-place">Cómo llegar</button>
@@ -182,7 +296,82 @@
 
   document.getElementById('placeName').textContent = place.name;
   document.getElementById('placeDesc').textContent = place.desc || '';
-  document.getElementById('placeInfo').textContent = place.info || '';
+
+  // ---------- insignias rápidas: guía y permiso ----------
+  const GUIA_LABELS = {
+    no_requerido: { text: 'Guía: no requerida', cls: 'verde' },
+    recomendado:  { text: 'Guía: recomendada', cls: 'amarillo' },
+    requerido:    { text: 'Guía: requerida', cls: 'rojo' }
+  };
+  const PERMISO_LABELS = {
+    no_requerido: { text: 'Permiso: no requerido', cls: 'verde' },
+    consultar:    { text: 'Permiso: consultar antes', cls: 'amarillo' },
+    requerido:    { text: 'Permiso: requerido', cls: 'rojo' }
+  };
+  const quickBadges = document.getElementById('quickBadges');
+  [GUIA_LABELS[place.guia], PERMISO_LABELS[place.permiso]].forEach(function(b){
+    if(!b) return;
+    const span = document.createElement('span');
+    span.className = 'badge-pill ' + b.cls;
+    span.textContent = b.text;
+    quickBadges.appendChild(span);
+  });
+
+  // ---------- secciones de texto: se ocultan solas si el lugar no tiene ese dato ----------
+  function fillTextBlock(blockId, textId, value){
+    const block = document.getElementById(blockId);
+    if(!value){ block.style.display = 'none'; return; }
+    document.getElementById(textId).textContent = value;
+  }
+  fillTextBlock('blockHistoria', 'txtHistoria', place.historia);
+  fillTextBlock('blockCultura', 'txtCultura', place.cultura);
+  fillTextBlock('blockAcontecimientos', 'txtAcontecimientos', place.acontecimientos);
+  fillTextBlock('blockLeyenda', 'txtLeyenda', place.leyenda);
+  fillTextBlock('blockInfo', 'txtInfo', place.info);
+
+  const blockDestacado = document.getElementById('blockDestacado');
+  if(place.destacado){
+    document.getElementById('destacadoTitulo').textContent = place.destacado.titulo;
+    document.getElementById('destacadoTexto').textContent = place.destacado.texto;
+  } else {
+    blockDestacado.style.display = 'none';
+  }
+
+  const chipActividades = document.getElementById('chipActividades');
+  const actividades = place.actividades || [];
+  if(!actividades.length){ document.getElementById('blockActividades').style.display = 'none'; }
+  actividades.forEach(function(a){
+    const span = document.createElement('span');
+    span.className = 'chip';
+    span.textContent = a;
+    chipActividades.appendChild(span);
+  });
+
+  const listProhibiciones = document.getElementById('listProhibiciones');
+  const prohibiciones = place.prohibiciones || [];
+  if(!prohibiciones.length){ document.getElementById('blockProhibiciones').style.display = 'none'; }
+  prohibiciones.forEach(function(p){
+    const li = document.createElement('li');
+    li.textContent = p;
+    listProhibiciones.appendChild(li);
+  });
+
+  // ---------- contacto de ayuda: Alcaldía + soporte de la propia página ----------
+  document.getElementById('municipioNombre').textContent = MUNICIPIO_CONTACTO.nombre;
+  const municipioTel = document.getElementById('municipioTel');
+  municipioTel.textContent = '☎ ' + MUNICIPIO_CONTACTO.telefono;
+  municipioTel.href = 'tel:' + MUNICIPIO_CONTACTO.telefono.replace(/[^\d+]/g, '');
+  const municipioCorreo = document.getElementById('municipioCorreo');
+  municipioCorreo.textContent = '✉ ' + MUNICIPIO_CONTACTO.correo;
+  municipioCorreo.href = 'mailto:' + MUNICIPIO_CONTACTO.correo;
+  document.getElementById('municipioDireccion').textContent = MUNICIPIO_CONTACTO.direccion;
+
+  const dmdTel = document.getElementById('dmdTel');
+  dmdTel.textContent = '☎ ' + DMD_CONTACTO.telefono;
+  dmdTel.href = 'tel:' + DMD_CONTACTO.telefono.replace(/[^\d+]/g, '');
+  const dmdCorreo = document.getElementById('dmdCorreo');
+  dmdCorreo.textContent = '✉ ' + DMD_CONTACTO.correo;
+  dmdCorreo.href = 'mailto:' + DMD_CONTACTO.correo;
 
   const gallery = document.getElementById('gallery');
   const videoWrap = document.getElementById('videoWrap');
