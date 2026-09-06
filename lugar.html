@@ -23,6 +23,14 @@
   }
   #gallery img{ height:100%; width:auto; flex:0 0 auto; object-fit:cover; }
   #gallery.empty{ display:flex; align-items:center; justify-content:center; color:#8A97A6; font-size:13px; }
+  #galleryCredit{
+    text-align:right;
+    font-size:11px;
+    color:#8A97A6;
+    padding:6px 24px 0 24px;
+    font-style:italic;
+  }
+  #galleryCredit:empty{ display:none; }
 
   .place-body{ padding:26px 24px; position:relative; }
   .place-body h1{ margin:0 0 6px 0; font-size:26px; font-weight:700; color:#12202E; }
@@ -164,6 +172,7 @@
 
 <div class="place-page" id="placePage" style="display:none;">
   <div id="gallery"></div>
+  <div id="galleryCredit"></div>
   <div class="place-body">
     <h1 id="placeName"></h1>
     <p class="place-desc" id="placeDesc"></p>
@@ -387,6 +396,12 @@
     });
   }
   renderPhotos(place.photos || []);
+
+  // ---------- crédito de las fotos (ej. "Tomado por Marlon Poveda") ----------
+  const galleryCredit = document.getElementById('galleryCredit');
+  if(place.fotosCredito){
+    galleryCredit.textContent = 'Tomado por ' + place.fotosCredito;
+  }
 
   function youtubeEmbedUrl(url){
     const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([A-Za-z0-9_-]{6,})/);
