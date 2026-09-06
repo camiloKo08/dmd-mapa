@@ -33,8 +33,11 @@ const PLACES = [
   { name: 'Zona de Camping Parque Neusa', desc: 'Zona para acampar en familia.', lat: 5.135742, lng: -73.966061,
     photos: [], video: '', info: '' },
   { name: 'Laguna Verde', desc: 'Laguna conocida por sus aguas frías y color verde esmeralda.', lat: 5.215278, lng: -73.999167,
+    photos: [], video: '', info: '' },
+  { name: 'Posos de sal', desc: 'Manantiales naturales de agua salina ubicados en el sector histórico de Tausa Viejo.', lat: 5.195242, lng: -73.897772,
     photos: [], video: '', info: '' }
 ];
+;
 
 // genera automáticamente el identificador de URL (slug) de cada lugar a
 // partir de su nombre, por ejemplo "Cerro de la Virgen" → "cerro-de-la-virgen"
