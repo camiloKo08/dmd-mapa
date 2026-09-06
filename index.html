@@ -69,6 +69,25 @@
     padding-bottom:10px;
   }
 
+  .welcome-block{
+    max-width:720px;
+    margin:0 auto;
+    padding:40px 20px 8px 20px;
+    text-align:center;
+  }
+  .welcome-block h2{
+    margin:0 0 12px 0;
+    font-size:26px;
+    font-weight:700;
+    color:#12202E;
+  }
+  .welcome-block p{
+    margin:0;
+    font-size:14.5px;
+    line-height:1.7;
+    color:#5B6B7C;
+  }
+
   /* ---------- section title ---------- */
   .section-title{
     max-width:1000px;
@@ -182,9 +201,19 @@
     color:#25313E;
     line-height:1.8;
     text-decoration:none;
-    display:block;
+    display:flex;
+    align-items:center;
+    gap:9px;
+  }
+  .footer-block a svg{
+    width:16px;
+    height:16px;
+    flex:0 0 auto;
+    color:#8A97A6;
+    transition:color 0.15s ease;
   }
   .footer-block a:hover{ color:#1F4E80; }
+  .footer-block a:hover svg{ color:#1F4E80; }
   .footer-note{
     max-width:1000px;
     margin:28px auto 0 auto;
@@ -211,7 +240,7 @@
 <div class="hero">
   <div class="hero-text">
     <h1>ENCUENTRA, <span class="accent">EXPLORA</span> Y DISFRUTA</h1>
-    <p>Turismo de Tausa — explora cada lugar y traza tu ruta con ubicación en tiempo real.</p>
+    <p>DMD — Tu guía digital para descubrir Tausa.</p>
   </div>
   <div class="hero-logo">
     <img src="logo-dmd.png" alt="Logo DMD — Directorio Mapa Digital, Tausa">
@@ -220,7 +249,11 @@
 </div>
 
 <div class="content-wrap">
-<div class="section-title">Empieza por aquí</div>
+<div class="welcome-block">
+  <h2>Bienvenido a Tausa</h2>
+  <p>Un lugar donde la historia, la naturaleza y la cultura se encuentran entre las montañas. Descubre sus paisajes, conoce sus historias y encuentra nuevas experiencias en cada rincón.</p>
+</div>
+<div class="section-title">Descubre nuestros lugares</div>
 <div class="home-grid">
   <a class="place-card map-card" href="mapa.html">
     <span class="icon">🗺️</span>
@@ -236,22 +269,31 @@
   <div class="footer-inner">
     <div class="footer-block">
       <div class="footer-title">Creado por</div>
-      <p>Juan Pérez</p>
-      <p>Desarrollo web y mapas — DMD Tausa</p>
+      <p>Camilo Andrés Hernández Ruiz</p>
+      <p>Proyecto SENA Grado 11</p>
     </div>
     <div class="footer-block">
       <div class="footer-title">Contacto</div>
-      <a href="tel:+573000000000">+57 300 000 0000</a>
-      <a href="mailto:contacto@dmdtausa.com">contacto@dmdtausa.com</a>
+      <a href="tel:+573125489961">+57 312 548 9961</a>
+      <a href="mailto:dmd.tausa@gmail.com">dmd.tausa@gmail.com</a>
     </div>
     <div class="footer-block">
       <div class="footer-title">Encuéntranos también en</div>
-      <a href="https://instagram.com/dmd.tausa" target="_blank" rel="noopener">Instagram — @dmd.tausa</a>
-      <a href="https://facebook.com/dmdtausa" target="_blank" rel="noopener">Facebook — DMD Tausa</a>
-      <a href="https://wa.me/573000000000" target="_blank" rel="noopener">WhatsApp — +57 300 000 0000</a>
+      <a href="https://instagram.com/dmd.tausa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        DMD Tausa
+      </a>
+      <a href="https://www.tiktok.com/@dmd.tausa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 3v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M16 3c.4 2.2 2 4 4.5 4.3"/></svg>
+        DMD Tausa
+      </a>
+      <a href="https://wa.me/573125489961" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20l1.4-4A8 8 0 1 1 9 19.5z"/><path d="M8.5 9.5c0 3 2.6 5.6 5.6 5.6.6 0 1-.1 1-.6v-1.1c0-.3-.2-.5-.5-.6l-1.7-.4c-.2 0-.4 0-.5.2l-.4.6c-1-.5-1.9-1.3-2.4-2.4l.6-.4c.2-.1.2-.3.2-.5l-.4-1.7c0-.3-.3-.5-.6-.5H8.6c-.3 0-.6.4-.6 1z"/></svg>
+        +57 312 548 9961
+      </a>
     </div>
   </div>
-  <div class="footer-note">Datos de ejemplo — reemplázalos por los tuyos en index.html (bloque "footer-inner").</div>
+  <div class="footer-note">DMD Tausa — Directorio Mapa Digital.</div>
 </footer>
 
 <script src="site-data.js"></script>
