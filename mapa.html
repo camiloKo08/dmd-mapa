@@ -367,13 +367,13 @@
     placeMarkers.push(marker);
 
     const li = document.createElement('li');
+    li.style.cursor = 'pointer';
     li.innerHTML =
       '<span class="left"><span class="sw"></span><span class="name">' + place.name + '</span></span>' +
       '<a href="lugar.html?p=' + place.slug + '">ficha</a>';
-    li.querySelector('.left').addEventListener('click', function(){
-      map.setView([place.lat, place.lng], 16);
-      marker.openPopup();
-      if(isMobileLayout()) closeMobilePanel();
+    li.addEventListener('click', function(e){
+      if(e.target.closest('a')) return; // el link "ficha" tiene su propia acción, no la pisamos
+      window.__goToPlaceSlug(place.slug);
     });
     placesListEl.appendChild(li);
   });
@@ -539,6 +539,8 @@
     if(destMarker && destMarkerOwned){ map.removeLayer(destMarker); }
     if(existingMarker){ destMarker = existingMarker; destMarkerOwned = false; }
     else { destMarker = L.marker([lat, lng], { icon: destIcon }).addTo(map); destMarkerOwned = true; }
+
+    map.setView([lat, lng], 15); // reacción inmediata, sin esperar a que cargue la ruta
 
     currentDestSlug = slug || null;
     destNameEl.textContent = name;
