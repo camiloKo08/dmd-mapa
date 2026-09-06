@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 <style>
-  body{ overflow-y:auto; }
+  body{ overflow-y:auto; background:#FFFFFF; }
   .place-page{
     max-width:760px;
     margin:0 auto;
@@ -18,16 +18,16 @@
     display:flex;
     gap:2px;
     overflow-x:auto;
-    background:var(--panel-2);
+    background:#EEF2F6;
     height:320px;
   }
   #gallery img{ height:100%; width:auto; flex:0 0 auto; object-fit:cover; }
-  #gallery.empty{ display:flex; align-items:center; justify-content:center; color:var(--fg-dim); font-size:13px; }
+  #gallery.empty{ display:flex; align-items:center; justify-content:center; color:#8A97A6; font-size:13px; }
 
-  .place-body{ padding:26px 24px; }
-  .place-body h1{ margin:0 0 6px 0; font-size:26px; font-weight:700; }
-  .place-desc{ margin:0 0 18px 0; color:var(--fg-dim); font-size:14px; }
-  .place-info{ font-size:14px; line-height:1.7; color:var(--fg); white-space:pre-line; margin:0 0 20px 0; }
+  .place-body{ padding:26px 24px; position:relative; }
+  .place-body h1{ margin:0 0 6px 0; font-size:26px; font-weight:700; color:#12202E; }
+  .place-desc{ margin:0 0 18px 0; color:#69788A; font-size:14px; }
+  .place-info{ font-size:14px; line-height:1.7; color:#25313E; white-space:pre-line; margin:0 0 20px 0; }
   .place-info:empty{ display:none; }
 
   #videoWrap{ margin-bottom:20px; }
@@ -36,39 +36,61 @@
   }
 
   .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:8px; }
+  .actions .btn-place{ background:#2C6CA6; color:#FFFFFF; }
+  .actions .btn-place:hover{ filter:brightness(1.08); }
+  .actions .btn-outline{ background:#FFFFFF; border:1px solid #D8E0E9; color:#25313E; }
+  .actions .btn-outline:hover{ border-color:#2C6CA6; color:#2C6CA6; }
 
   /* ---------- panel de administrador ---------- */
-  #adminPanel{ display:none; margin-top:28px; padding-top:20px; border-top:1px dashed var(--line); }
+  #adminPanel{ display:none; margin-top:28px; padding-top:20px; border-top:1px dashed #E4E9EF; }
   #adminPanel.on{ display:block; }
   #adminPanel .admin-title{
     font-size:11.5px; text-transform:uppercase; letter-spacing:1px;
     color:var(--accent-2); font-weight:600; margin-bottom:10px;
   }
-  .admin-hint{ font-size:12.5px; color:var(--fg-dim); line-height:1.5; margin:0 0 12px 0; }
+  .admin-hint{ font-size:12.5px; color:#69788A; line-height:1.5; margin:0 0 12px 0; }
   #adminLoginBox input{
     width:100%; max-width:280px; display:block;
-    background:var(--panel-2); border:1px solid var(--line); color:var(--fg);
+    background:#F8FAFC; border:1px solid #D8E0E9; color:#12202E;
     padding:9px 10px; border-radius:8px; font-size:13px; margin-bottom:8px;
     font-family:'Space Grotesk', sans-serif;
   }
+  #adminLoginBox .btn-outline{ background:#FFFFFF; border:1px solid #D8E0E9; color:#25313E; }
+  #adminLoginBox .btn-outline:hover{ border-color:#2C6CA6; color:#2C6CA6; }
   .admin-error{ font-size:11.5px; color:var(--danger); margin-top:6px; }
-  #adminLoggedInBox a{ color:var(--accent); cursor:pointer; }
-  #adminAddImageBtn{ margin:10px 0 14px 0; }
+  #adminLoggedInBox a{ color:#2C6CA6; cursor:pointer; }
+  #adminAddImageBtn{ margin:10px 0 14px 0; background:#2C6CA6; color:#FFFFFF; }
   #adminAddImageBtn:disabled{ opacity:0.5; cursor:not-allowed; }
   #adminPreview{ display:flex; flex-wrap:wrap; gap:8px; }
   #adminPreview .thumb{
     width:84px; height:84px; border-radius:8px; overflow:hidden;
-    border:1px solid var(--line); background:var(--panel-2); position:relative;
+    border:1px solid #D8E0E9; background:#F1F4F8; position:relative;
   }
   #adminPreview .thumb img, #adminPreview .thumb video{ width:100%; height:100%; object-fit:cover; }
   #adminPreview .thumb.uploading{ opacity:0.55; }
   #adminPreview .thumb .tag{
     position:absolute; bottom:0; left:0; right:0;
-    background:rgba(6,11,17,0.75); color:var(--fg);
+    background:rgba(6,11,17,0.75); color:#fff;
     font-size:9px; text-align:center; padding:2px 0;
   }
 
-  #notFound{ display:none; padding:60px 24px; text-align:center; color:var(--fg-dim); }
+  #notFound{ display:none; padding:60px 24px; text-align:center; color:#69788A; }
+
+  /* ---------- logo como marca de agua ---------- */
+  .brand-watermark{
+    position:fixed;
+    right:18px;
+    bottom:16px;
+    width:46px;
+    height:46px;
+    opacity:0.55;
+    pointer-events:none;
+    z-index:50;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+  }
+  @media (max-width:700px){
+    .brand-watermark{ width:36px; height:36px; right:12px; bottom:12px; }
+  }
 </style>
 </head>
 <body>
@@ -81,6 +103,8 @@
   </div>
   <div class="site-brand"><span class="dot"></span>DMD</div>
 </header>
+
+<img src="logo-dmd.png" alt="" class="brand-watermark">
 
 <div id="notFound">
   <p>No encontramos este lugar.</p>

@@ -37,7 +37,6 @@ const PLACES = [
   { name: 'Posos de sal', desc: 'Manantiales naturales de agua salina ubicados en el sector histórico de Tausa Viejo.', lat: 5.195242, lng: -73.897772,
     photos: [], video: '', info: '' }
 ];
-;
 
 // genera automáticamente el identificador de URL (slug) de cada lugar a
 // partir de su nombre, por ejemplo "Cerro de la Virgen" → "cerro-de-la-virgen"

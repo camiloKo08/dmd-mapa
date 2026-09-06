@@ -9,9 +9,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 <style>
-  body{ overflow:hidden; }
+  body{ overflow:hidden; background:#FFFFFF; }
   #pageWrap{ display:flex; flex-direction:column; height:100vh; }
-  #app{ flex:1; min-height:0; display:flex; }
+  #app{
+    flex:1; min-height:0; display:flex;
+    /* el mapa usa el mismo azul+blanco del resto del sitio; la barra
+       superior (arriba) se queda oscura a propósito, sin tocarla */
+    --panel:#F8FAFC;
+    --panel-2:#F1F4F8;
+    --line:#E4E9EF;
+    --fg:#12202E;
+    --fg-dim:#69788A;
+  }
 
   /* ---------- SIDEBAR ---------- */
   #panel{
@@ -22,7 +31,7 @@
     z-index:1000; position:relative;
   }
   header.brand{ padding:16px 20px 14px 20px; border-bottom:1px solid var(--line); position:relative; }
-  header.brand .logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:16px; }
+  header.brand .logo{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:16px; color:var(--fg); }
   header.brand .logo .dot{ width:9px;height:9px;border-radius:50%; background:var(--accent); box-shadow:0 0 0 4px rgba(0,194,168,0.15); }
   header.brand p{ margin:6px 0 0 19px; font-size:12px; color:var(--fg-dim); }
 
@@ -147,6 +156,22 @@
     width:30px;height:30px; border-radius:50%; cursor:pointer; font-size:13px;
   }
 
+  /* ---------- logo como marca de agua, sobre el mapa ---------- */
+  .brand-watermark{
+    position:absolute;
+    left:14px;
+    bottom:14px;
+    width:44px;
+    height:44px;
+    opacity:0.75;
+    pointer-events:none;
+    z-index:850;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+  }
+  @media (max-width:768px){
+    .brand-watermark{ width:34px; height:34px; left:10px; bottom:10px; }
+  }
+
   @media (max-width: 768px){
     #menuToggleBtn{ display:flex; }
     #panel{
@@ -233,6 +258,7 @@
       <button id="menuToggleBtn" title="Ver lugares y búsqueda">☰</button>
       <div id="hint">Toca el mapa para elegir un destino</div>
       <button id="locateBtn" title="Centrar en mi ubicación">◎</button>
+      <img src="logo-dmd.png" alt="" class="brand-watermark">
       <div id="map"></div>
     </div>
     <div id="panelBackdrop"></div>

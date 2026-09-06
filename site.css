@@ -141,6 +141,8 @@ body{
   cursor:pointer;
   font-family:'Space Grotesk', sans-serif;
   padding:11px 18px;
+  text-decoration:none;
+  display:inline-block;
 }
 .btn-primary{background:var(--accent);color:#04211C;}
 .btn-primary:hover{filter:brightness(1.08);}
