@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acerca de DMD — Directorio Mapa Digital, Tausa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  body{ overflow-x:hidden; background:#FFFFFF; }
+
+  /* ---------- HERO ---------- */
+  .about-hero{
+    background:linear-gradient(160deg, #2C6CA6, #1F4E80);
+    padding:54px 20px 64px 20px;
+    text-align:center;
+  }
+  .about-hero .eyebrow{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; font-weight:600; letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:#fff; background:rgba(255,255,255,0.14);
+    padding:6px 14px; border-radius:20px;
+    margin-bottom:18px;
+  }
+  .about-hero-logo{
+    width:88px; height:88px;
+    margin:0 auto 20px auto;
+    background:rgba(255,255,255,0.94);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    padding:8px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.18);
+  }
+  .about-hero-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .about-hero h1{
+    font-size:34px; font-weight:800; line-height:1.2;
+    color:#fff; margin:0 0 12px 0;
+  }
+  .about-hero h1 .accent{ color:#7CF2D8; }
+  .about-hero p{
+    color:rgba(255,255,255,0.82);
+    font-size:15px; line-height:1.7;
+    max-width:640px; margin:0 auto;
+  }
+
+  /* ---------- contenido general ---------- */
+  .about-wrap{ max-width:920px; margin:0 auto; padding:0 20px; }
+  .about-section{ padding:52px 0; border-bottom:1px solid #EEF1F5; }
+  .about-section:last-of-type{ border-bottom:none; }
+  .about-section .kicker{
+    font-size:11.5px; text-transform:uppercase; letter-spacing:1px;
+    color:#00967F; font-weight:700; margin-bottom:10px;
+  }
+  .about-section h2{
+    font-size:24px; font-weight:800; color:#12202E; margin:0 0 16px 0;
+  }
+  .about-section p{
+    font-size:14.5px; line-height:1.8; color:#4A5A6A; margin:0 0 14px 0;
+  }
+  .about-section p:last-child{ margin-bottom:0; }
+
+  /* ---------- caja destacada (objetivo general) ---------- */
+  .about-highlight{
+    background:linear-gradient(135deg, rgba(0,194,168,0.08), rgba(44,108,166,0.06));
+    border:1px solid rgba(0,194,168,0.35);
+    border-radius:14px;
+    padding:24px 26px;
+    margin-top:8px;
+  }
+  .about-highlight p{ color:#12202E; font-size:15px; margin:0; }
+
+  /* ---------- lista de objetivos ---------- */
+  .about-checklist{ list-style:none; margin:18px 0 0 0; padding:0; display:grid; gap:10px; }
+  .about-checklist li{
+    display:flex; align-items:flex-start; gap:10px;
+    font-size:14px; line-height:1.6; color:#25313E;
+  }
+  .about-checklist li::before{
+    content:"✓";
+    flex:0 0 auto;
+    width:20px; height:20px;
+    border-radius:50%;
+    background:rgba(0,194,168,0.15);
+    color:#00967F;
+    font-size:12px; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+
+  /* ---------- misión / visión ---------- */
+  .about-twocol{
+    display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:8px;
+  }
+  .about-card{
+    background:#F8FAFC; border:1px solid #E4E9EF; border-radius:14px;
+    padding:22px 22px;
+  }
+  .about-card .card-icon{ font-size:22px; margin-bottom:10px; display:block; }
+  .about-card h3{ font-size:15.5px; font-weight:700; color:#12202E; margin:0 0 8px 0; }
+  .about-card p{ font-size:13.5px; color:#5B6B7C; line-height:1.7; margin:0; }
+
+  /* ---------- valores ---------- */
+  .about-values{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    gap:14px; margin-top:8px;
+  }
+  .value-card{
+    background:#fff; border:1px solid #E4E9EF; border-radius:14px;
+    padding:20px 18px; text-align:left;
+    transition:border-color 0.15s ease, transform 0.15s ease;
+  }
+  .value-card:hover{ border-color:var(--accent); transform:translateY(-2px); }
+  .value-card .v-icon{ font-size:20px; margin-bottom:10px; display:block; }
+  .value-card h4{ font-size:13.5px; font-weight:700; color:#12202E; margin:0 0 6px 0; }
+  .value-card p{ font-size:12.5px; color:#69788A; line-height:1.6; margin:0; }
+
+  /* ---------- cómo funciona (pasos) ---------- */
+  .about-steps{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:16px; margin-top:8px;
+  }
+  .step-card{ position:relative; padding-left:2px; }
+  .step-card .step-num{
+    width:34px; height:34px; border-radius:10px;
+    background:linear-gradient(135deg, #2C6CA6, #1F4E80);
+    color:#fff; font-weight:800; font-size:14px;
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:12px;
+  }
+  .step-card h4{ font-size:14.5px; font-weight:700; color:#12202E; margin:0 0 6px 0; }
+  .step-card p{ font-size:13px; color:#69788A; line-height:1.6; margin:0; }
+
+  /* ---------- cierre ---------- */
+  .about-closing{
+    text-align:center;
+    background:linear-gradient(160deg, #2C6CA6, #1F4E80);
+    border-radius:18px;
+    padding:44px 26px;
+    margin:8px 0 12px 0;
+  }
+  .about-closing p.lead{
+    color:#fff; font-size:20px; font-weight:800; letter-spacing:0.3px;
+    margin:0 0 8px 0;
+  }
+  .about-closing p.sub{
+    color:rgba(255,255,255,0.82); font-size:13.5px; margin:0 0 22px 0;
+  }
+  .about-closing .btn{
+    background:#00C2A8; color:#04211C; font-weight:700;
+    padding:11px 22px; border-radius:9px; text-decoration:none;
+    font-size:13.5px; display:inline-block;
+  }
+  .about-closing .btn:hover{ filter:brightness(1.08); }
+
+  @media (max-width:700px){
+    .about-hero h1{ font-size:26px; }
+    .about-twocol{ grid-template-columns:1fr; }
+    .about-section{ padding:40px 0; }
+  }
+
+  /* ---------- logo como marca de agua (igual que en las demás subpáginas) ---------- */
+  .brand-watermark{
+    position:fixed;
+    right:18px;
+    bottom:16px;
+    width:46px;
+    height:46px;
+    opacity:0.55;
+    pointer-events:none;
+    z-index:50;
+    filter:drop-shadow(0 2px 6px rgba(0,0,0,0.12));
+  }
+  @media (max-width:700px){
+    .brand-watermark{ width:36px; height:36px; right:12px; bottom:12px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-topbar">
+  <a href="index.html" class="site-back">← Inicio</a>
+  <div class="site-search">
+    <input type="text" id="topSearchInput" placeholder="Buscar un lugar turístico…" autocomplete="off">
+    <ul id="topSearchResults"></ul>
+  </div>
+  <div class="site-brand"><span class="dot"></span>DMD</div>
+</header>
+
+<img src="logo-dmd.png" alt="" class="brand-watermark">
+
+<div class="about-hero">
+  <div class="about-hero-logo">
+    <img src="logo-dmd.png" alt="Logo DMD — Directorio Mapa Digital, Tausa">
+  </div>
+  <span class="eyebrow">📍 Tausa, Cundinamarca</span>
+  <h1>Encuentra, <span class="accent">explora</span> y disfruta</h1>
+  <p>DMD (Directorio y Mapa Digital) es un proyecto turístico y digital creado para dar a conocer la riqueza de Tausa, conectando a visitantes y comunidad con sus lugares, paisajes, historia, cultura y naturaleza a través de la tecnología.</p>
+</div>
+
+<div class="about-wrap">
+
+  <div class="about-section">
+    <div class="kicker">¿Por qué nació DMD?</div>
+    <h2>Una nueva forma de mostrar a Tausa</h2>
+    <p>DMD nació como una iniciativa para aprovechar las herramientas digitales como una nueva forma de promocionar el turismo de Tausa. La idea es reunir en un mismo espacio información sobre los diferentes lugares que pueden visitar las personas, ayudándolas a descubrir nuevos destinos y conocer mejor la identidad del municipio.</p>
+    <p>No se trata solamente de mostrar lugares: buscamos crear un puente entre la tecnología, el turismo y la comunidad, haciendo que descubrir Tausa sea más sencillo, atractivo y dinámico. Por medio de un mapa virtual, una página web, fotografías, videos, contenido realizado con drones y redes sociales, facilitamos la exploración del territorio y brindamos información útil a los visitantes.</p>
+  </div>
+
+  <div class="about-section">
+    <div class="kicker">Nuestro propósito</div>
+    <h2>Promover el turismo con herramientas digitales</h2>
+    <p>Nuestro propósito es promover el turismo de Tausa mediante herramientas digitales, facilitando que los visitantes encuentren, conozcan y lleguen a los diferentes lugares turísticos, culturales e históricos del municipio.</p>
+    <p>Al mismo tiempo, DMD busca contribuir al desarrollo local al aumentar la visibilidad de los atractivos y actividades de Tausa, generando oportunidades para los comercios y las comunidades que hacen parte del territorio.</p>
+
+    <div class="about-highlight">
+      <p><strong>🎯 Objetivo general:</strong> impulsar el turismo de Tausa mostrando la belleza de sus paisajes, su cultura y sus lugares históricos mediante estrategias de marketing y herramientas digitales, ofreciendo a los visitantes nuevas formas de conocer y disfrutar el municipio.</p>
+    </div>
+
+    <ul class="about-checklist">
+      <li>Crear y mantener un mapa virtual GPS que permita a los visitantes ubicar y explorar diferentes lugares de Tausa.</li>
+      <li>Dar a conocer los sitios turísticos, culturales e históricos mediante la página web y las redes sociales.</li>
+      <li>Crear contenido audiovisual atractivo mediante fotografía, video y tomas aéreas con dron.</li>
+      <li>Facilitar el acceso a información útil sobre los destinos y cómo llegar a ellos.</li>
+      <li>Promover la historia, cultura, naturaleza y paisajes de Tausa.</li>
+      <li>Apoyar la visibilidad de los comercios y emprendimientos locales relacionados con el turismo.</li>
+      <li>Utilizar la tecnología para crear una experiencia turística más moderna, práctica y accesible.</li>
+    </ul>
+  </div>
+
+  <div class="about-section">
+    <div class="kicker">Rumbo</div>
+    <h2>Misión y visión</h2>
+    <div class="about-twocol">
+      <div class="about-card">
+        <span class="card-icon">🚀</span>
+        <h3>Nuestra misión</h3>
+        <p>Promover el reconocimiento de los lugares turísticos de Tausa mediante un mapa virtual y una página web que faciliten a los visitantes encontrar información sobre los destinos, conocer su historia y descubrir la riqueza cultural, natural e histórica del municipio mediante herramientas digitales.</p>
+      </div>
+      <div class="about-card">
+        <span class="card-icon">🔭</span>
+        <h3>Nuestra visión</h3>
+        <p>Convertir a DMD, en un plazo de 5 años, en un proyecto reconocido como una herramienta de referencia para que habitantes y visitantes puedan ubicar y conocer fácilmente los principales sitios turísticos de Tausa mediante un mapa virtual moderno, práctico y fácil de utilizar.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="kicker">Lo que nos guía</div>
+    <h2>Nuestros valores</h2>
+    <div class="about-values">
+      <div class="value-card">
+        <span class="v-icon">💡</span>
+        <h4>Innovación</h4>
+        <p>Utilizamos la tecnología para crear nuevas formas de conocer y promocionar Tausa.</p>
+      </div>
+      <div class="value-card">
+        <span class="v-icon">🌱</span>
+        <h4>Identidad</h4>
+        <p>Valoramos y promovemos la historia, cultura, naturaleza y tradiciones del municipio.</p>
+      </div>
+      <div class="value-card">
+        <span class="v-icon">🤝</span>
+        <h4>Compromiso</h4>
+        <p>Trabajamos para ofrecer información útil y contenido de calidad a visitantes y comunidad.</p>
+      </div>
+      <div class="value-card">
+        <span class="v-icon">🎨</span>
+        <h4>Creatividad</h4>
+        <p>Transformamos los atractivos de Tausa en experiencias visuales y digitales atractivas.</p>
+      </div>
+      <div class="value-card">
+        <span class="v-icon">🏘️</span>
+        <h4>Desarrollo local</h4>
+        <p>Buscamos que la promoción turística también contribuya al crecimiento de las comunidades y comercios del municipio.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="kicker">📱 Así funciona</div>
+    <h2>¿Cómo funciona DMD?</h2>
+    <div class="about-steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h4>Explora</h4>
+        <p>Conoce los diferentes lugares turísticos, culturales, históricos y naturales de Tausa.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h4>Descubre</h4>
+        <p>Consulta fotografías, videos, información y contenido sobre cada destino.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h4>Ubícate</h4>
+        <p>Utiliza el mapa virtual para localizar los lugares y conocer cómo llegar.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h4>Comparte</h4>
+        <p>Descubre contenido en nuestras plataformas digitales y comparte tus experiencias.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="kicker">🌄 Más que un mapa</div>
+    <h2>Un ecosistema digital turístico</h2>
+    <p>DMD busca ser mucho más que una herramienta de ubicación. Queremos construir un ecosistema digital turístico que reúna información, promoción y tecnología para ayudar a que más personas descubran Tausa.</p>
+    <p>Cada fotografía, cada lugar incluido en el mapa y cada contenido publicado tiene un mismo propósito: mostrar lo que hace especial a Tausa y motivar a más personas a visitarla, conocerla y disfrutarla.</p>
+  </div>
+
+  <div class="about-section" style="border-bottom:none;">
+    <div class="kicker">💬 Tu opinión</div>
+    <h2>¿Qué te ha parecido la página?</h2>
+    <p>Cuéntanos tu experiencia usando DMD — si te fue fácil encontrar lo que buscabas, si el mapa te sirvió, o qué le agregarías.</p>
+    <div id="reviewsContainer"></div>
+  </div>
+
+  <div class="about-closing">
+    <p class="lead">Encuentra. Explora. Disfruta.</p>
+    <p class="sub">Tausa tiene mucho por descubrir. Nosotros te ayudamos a encontrarlo.</p>
+    <a href="mapa.html" class="btn">Ver el mapa →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-block">
+      <div class="footer-title">Creado por</div>
+      <p>DMD Studio</p>
+      <p>Proyecto SENA Grado 11</p>
+    </div>
+    <div class="footer-block">
+      <div class="footer-title">Contacto</div>
+      <a href="tel:+573115033916">+57 311 503 3916</a>
+      <a href="mailto:dmd.tausa@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        dmd.tausa@gmail.com
+      </a>
+    </div>
+    <div class="footer-block">
+      <div class="footer-title">Encuéntranos también en</div>
+      <a href="https://instagram.com/_directorio_y_mapa_digital" target="_blank" rel="noopener">
+        <svg class="brand-icon" viewBox="0 0 24 24"><defs><linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FEE411"/><stop offset="25%" stop-color="#FB8A2E"/><stop offset="50%" stop-color="#EA2A7D"/><stop offset="75%" stop-color="#BC2AB5"/><stop offset="100%" stop-color="#6228D7"/></linearGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" fill="url(#igGrad)"/><rect x="6.4" y="6.4" width="11.2" height="11.2" rx="3.4" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="12" cy="12" r="3.2" fill="none" stroke="#fff" stroke-width="1.6"/><circle cx="17" cy="7" r="1" fill="#fff"/></svg>
+        @_directorio_y_mapa_digital
+      </a>
+      <a href="https://www.tiktok.com/@2026directorioymapadigit" target="_blank" rel="noopener">
+        <svg class="brand-icon" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="6" fill="#010101"/><path d="M15.1 5.3c.4 1.7 1.6 2.9 3.4 3.1v2.3c-1.2 0-2.4-.4-3.4-1v4.8c0 2.5-2 4.4-4.4 4.4-2.5 0-4.4-2-4.4-4.4 0-2.4 1.9-4.4 4.3-4.4.3 0 .5 0 .8.1v2.4c-.3-.1-.5-.1-.8-.1-1.1 0-2 .9-2 2 0 1.1.9 2 2 2 1.1 0 2.1-.9 2.1-2.1V5.3h2.4z" fill="#25F4EE" transform="translate(-0.5,-0.4)"/><path d="M15.1 5.3c.4 1.7 1.6 2.9 3.4 3.1v2.3c-1.2 0-2.4-.4-3.4-1v4.8c0 2.5-2 4.4-4.4 4.4-2.5 0-4.4-2-4.4-4.4 0-2.4 1.9-4.4 4.3-4.4.3 0 .5 0 .8.1v2.4c-.3-.1-.5-.1-.8-.1-1.1 0-2 .9-2 2 0 1.1.9 2 2 2 1.1 0 2.1-.9 2.1-2.1V5.3h2.4z" fill="#FE2C55" transform="translate(0.5,0.4)"/><path d="M15.1 5.3c.4 1.7 1.6 2.9 3.4 3.1v2.3c-1.2 0-2.4-.4-3.4-1v4.8c0 2.5-2 4.4-4.4 4.4-2.5 0-4.4-2-4.4-4.4 0-2.4 1.9-4.4 4.3-4.4.3 0 .5 0 .8.1v2.4c-.3-.1-.5-.1-.8-.1-1.1 0-2 .9-2 2 0 1.1.9 2 2 2 1.1 0 2.1-.9 2.1-2.1V5.3h2.4z" fill="#fff"/></svg>
+        @2026directorioymapadigit
+      </a>
+      <a href="https://wa.me/573115033916" target="_blank" rel="noopener">
+        <svg class="brand-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#25D366"/><path d="M16.7 13.9c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.2-.6.8-.8 1-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2.1-1.3-.8-.7-1.3-1.6-1.5-1.8-.1-.2 0-.4.1-.5.1-.1.3-.3.4-.5.1-.1.2-.3.2-.4.1-.2 0-.3 0-.5-.1-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2 0 1.3.9 2.5 1.1 2.7.1.2 1.8 2.8 4.5 3.8.6.3 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z" fill="#fff"/></svg>
+        +57 311 503 3916
+      </a>
+    </div>
+  </div>
+  <div class="footer-note">DMD Tausa — Directorio Mapa Digital.</div>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="site-data.js"></script>
+<script src="topsearch.js"></script>
+<script src="reviews.js"></script>
+<script>
+  // conexión mínima a Firebase, solo para leer/guardar reseñas (sin login de administrador aquí)
+  window.fb = { db:null, ready:false };
+  try{
+    if(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf('TU_') !== 0){
+      if(!firebase.apps.length) firebase.initializeApp(FIREBASE_CONFIG);
+      window.fb.db = firebase.firestore();
+      window.fb.ready = true;
+    }
+  } catch(e){ console.warn('Firebase no configurado todavía:', e); }
+
+  renderReviewsWidget(document.getElementById('reviewsContainer'), 'experiencia-dmd', {
+    placeholder: '¿Qué te ha parecido usar la página? (opcional)'
+  });
+</script>
+
+<!-- ---------- asistente virtual ---------- -->
+<button id="assistantToggle" aria-label="Abrir asistente virtual"></button>
+<div id="assistantPanel">
+  <div id="assistantHeader">
+    <span class="title"><span id="assistantHeaderAvatar" class="header-avatar"></span>Asistente DMD</span>
+    <button id="assistantClose">✕</button>
+  </div>
+  <div id="assistantMessages"></div>
+  <div id="assistantSuggestions"></div>
+  <div id="assistantInputRow">
+    <input type="text" id="assistantInput" placeholder="Escribe tu pregunta…" autocomplete="off">
+    <button id="assistantSend">➤</button>
+  </div>
+</div>
+<script src="assistant.js"></script>
+</body>
+</html>
