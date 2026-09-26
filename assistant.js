@@ -170,7 +170,7 @@
 
     // cómo buscar
     if(/como busco|como encuentro|como funciona la busqueda|buscador/.test(q)){
-      addBotMessage('Puedes usar la barra de búsqueda de arriba (escribe el nombre del lugar), o simplemente pregúntamelo aquí mismo — por ejemplo escribe "Laguna Verde" y te cuento de qué se trata.');
+      addBotMessage('Puedes usar la barra de búsqueda de arriba (escribe el nombre del lugar), o simplemente pregúntamelo aquí mismo — por ejemplo escribe "Mirador Neusa" y te cuento de qué se trata.');
       return;
     }
 

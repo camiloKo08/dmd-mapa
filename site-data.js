@@ -197,29 +197,6 @@ const PLACES = [
     }
   },
   {
-    name: 'Laguna Verde',
-    desc: 'Laguna de páramo de aguas verde esmeralda.',
-    lat: 5.215278, lng: -73.999167,
-    photos: ['fotos/laguna-verde/foto1.jpg', 'fotos/laguna-verde/foto2.jpg', 'fotos/laguna-verde/foto3.jpg', 'fotos/laguna-verde/foto4.jpg', 'fotos/laguna-verde/foto5.jpg', 'fotos/laguna-verde/foto6.jpg', 'fotos/laguna-verde/foto7.jpg', 'fotos/laguna-verde/foto8.jpg'],
-    fotosCredito: 'William Ramírez',
-    video: '',
-    historia: 'Laguna de alta montaña asociada al Complejo de Páramos de Guerrero, un ecosistema clave para la regulación y producción de agua en la región. En 2026 se anunció un proyecto para desarrollar aquí el primer jardín botánico de ecosistemas de alta montaña de Cundinamarca.',
-    acontecimientos: '',
-    cultura: '',
-    leyenda: 'Según relatos transmitidos de forma oral en la región, alrededor de Laguna Verde existen historias tradicionales sobre una laguna encantada y un ser conocido como "el mohán".',
-    destacado: { titulo: '🌱 Protege el páramo', texto: 'Laguna Verde hace parte de un ecosistema de páramo esencial para el agua de la región. Cuidarlo depende de cada visitante: no arranques frailejones, no contamines el agua y mantente en las rutas autorizadas.' },
-    actividades: ['Senderismo', 'Fotografía', 'Observación de flora', 'Observación de fauna', 'Contemplación de la naturaleza'],
-    prohibiciones: ['No arrancar frailejones ni otras plantas de páramo', 'No arrojar basura', 'No contaminar el agua', 'No salirse de las rutas autorizadas'],
-    guia: 'recomendado',
-    permiso: 'consultar',
-    info: '',
-    biodiversidad: {
-      animales: ['Conejo de monte', 'Comadreja', 'Fara', 'Borugo', 'Guache', 'Ratones de campo'],
-      aves: ['Colibríes', 'Mirlas', 'Copetones', 'Golondrinas', 'Torcazas', 'Lechuzas'],
-      plantas: ['Frailejones', 'Chusque', 'Encenillo', 'Uva camarona', 'Romero de páramo', 'Tunos', 'Bromelias', 'Puya']
-    }
-  },
-  {
     name: 'Posos de sal',
     desc: 'Manantiales de agua salina de valor histórico.',
     lat: 5.195242, lng: -73.897772,
